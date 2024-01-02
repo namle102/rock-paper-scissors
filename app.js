@@ -1,72 +1,32 @@
 // Randomly get com choice
 const getComputerChoice = () => {
-    let num = Math.floor(Math.random()*3 + 1); 
-    return num;
-}
+    let comChoice;
 
-// Stimulate single play round
+    let num = Math.floor(Math.random() * 3 + 1);
+    if (num === 1) comChoice = "Rock";
+    else if (num === 2) comChoice = "Paper";
+    else comChoice = "Scissors";
+
+    return comChoice;
+};
+
+// Single round play
 function playRound(playerSelection, computerSelection) {
-    let x = String(playerSelection).toLowerCase(), xNum;
-    let y, yNum = computerSelection;
-    let res, outcome;
+    const pChoice = String(playerSelection).toLowerCase();
+    const cChoice = String(computerSelection).toLowerCase();
+    const pChoiceOut = pChoice.charAt(0).toUpperCase() + pChoice.substring(1);
+    const cChoiceOut = cChoice.charAt(0).toUpperCase() + cChoice.substring(1);
 
-    x = x.charAt(0).toUpperCase() + x.substring(1);
-    if (x === "Rock") xNum = 1;
-    else if (x === "Paper") xNum = 2;
-    else if (x === "Scissors") xNum = 3;
-    else xNum = NaN;
-
-    if (yNum === 1) y = "Rock";
-    else if (yNum === 2) y = "Paper";
-    else y = "Scissors";
-
-    if (xNum === yNum) {
-        res = "Tie";
-        outcome = 0;
-    }
-    else if (yNum-xNum === 1) {
-        res = `You Lose! ${y} beats ${x}`;
-        outcome = -1;
-    }
-    else if (xNum-yNum === 2) {
-        res = `You Lose! ${y} beats ${x}`;
-        outcome = -1;
-    }
-    else if (xNum-yNum === 1) {
-        res = `You Win! ${x} beats ${y}`;
-        outcome = 1;
-    }
-    else if (yNum-xNum === 2) {
-        res = `You Win! ${x} beats ${y}`;
-        outcome = 1;
-    }
-    else {
-        res = "Invalid";
-        outcome = NaN;
-    }
-
-    console.log("## New Round ##");
-    console.log(`Me choice:   ${x}`);
-    console.log(`Com choice:  ${y}`);
-    console.log(res);
-    console.log("\n");
-    return outcome;
+    if (pChoice === cChoice)
+        return playRound(playerSelection, getComputerChoice());
+    else if (
+        (pChoice === "rock" && cChoice === "paper") ||
+        (pChoice === "paper" && cChoice === "scissors") ||
+        (pChoice === "scissors" && cChoice === "rock")
+    )
+        return `You Lose! ${cChoiceOut} beats ${pChoiceOut}`;
+    else return `You Win! ${pChoiceOut} beats ${cChoiceOut}`;
 }
-
-// IIFE stimulate a game
-(function() {
-    let playerCount = 0, comCount = 0;
-    const playerChoicePool = ['rock', 'paper', 'scissors', 'scissors', 'rock'];
-
-    for (let i=0; i<5; i++) {
-        const playerSelection = playerChoicePool[i];
-        const computerSelection = getComputerChoice();
-        let outcome = playRound(playerSelection, computerSelection);
-        outcome === 1 && playerCount++;
-        outcome === -1 && comCount++;
-    }
-
-    if (playerCount > comCount) console.log(`You win by ${playerCount} - ${comCount}`);
-    else if (playerCount < comCount) console.log(`You lose by ${playerCount} - ${comCount}`);
-    else console.log(`You tie by ${playerCount} - ${comCount}`);
-})();
+const playerSelection = "ROCK";
+const computerSelection = getComputerChoice();
+console.log(playRound(playerSelection, computerSelection));
