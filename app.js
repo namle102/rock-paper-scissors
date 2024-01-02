@@ -12,21 +12,55 @@ const getComputerChoice = () => {
 
 // Single round play
 function playRound(playerSelection, computerSelection) {
-    const pChoice = String(playerSelection).toLowerCase();
-    const cChoice = String(computerSelection).toLowerCase();
-    const pChoiceOut = pChoice.charAt(0).toUpperCase() + pChoice.substring(1);
-    const cChoiceOut = cChoice.charAt(0).toUpperCase() + cChoice.substring(1);
+    let res;
+    const pChoice =
+        playerSelection.charAt(0).toUpperCase() +
+        playerSelection.substring(1).toLowerCase();
+    const cChoice =
+        computerSelection.charAt(0).toUpperCase() +
+        computerSelection.substring(1).toLowerCase();
 
-    if (pChoice === cChoice)
-        return playRound(playerSelection, getComputerChoice());
-    else if (
-        (pChoice === "rock" && cChoice === "paper") ||
-        (pChoice === "paper" && cChoice === "scissors") ||
-        (pChoice === "scissors" && cChoice === "rock")
-    )
-        return `You Lose! ${cChoiceOut} beats ${pChoiceOut}`;
-    else return `You Win! ${pChoiceOut} beats ${cChoiceOut}`;
+    if (pChoice === cChoice) {
+        console.log("Ties");
+        res = 0;
+    } else if (
+        (pChoice === "Rock" && cChoice === "Paper") ||
+        (pChoice === "Paper" && cChoice === "Scissors") ||
+        (pChoice === "Scissors" && cChoice === "Rock")
+    ) {
+        console.log(`You Lose:  ${cChoice} beats ${pChoice}`);
+        res = 1;
+    } else {
+        console.log(`You Win:   ${pChoice} beats ${cChoice}`);
+        res = 2;
+    }
+
+    return res;
 }
-const playerSelection = "ROCK";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+
+// Game on
+function game() {
+    let pCount = 0;
+    let cCount = 0;
+    let final;
+
+    for (let i = 0; i < 5; i++) {
+        let playerSelection = prompt();
+        let computerSelection = getComputerChoice();
+        console.log(`Round ${i + 1}:`);
+        let res = playRound(playerSelection, computerSelection);
+
+        res === 1 && cCount++;
+        res === 2 && pCount++;
+
+        console.log(`SCORE:     ${pCount}-${cCount}`);
+        console.log(`-----`);
+    }
+
+    if (pCount > cCount) final = `\nYOU WIN by ${pCount}-${cCount}`;
+    else if (pCount < cCount) final = `\nYOU LOSE by ${pCount}-${cCount}`;
+    else final = `\nTIES by ${pCount}-${cCount}`;
+
+    return final;
+}
+console.log(game());
