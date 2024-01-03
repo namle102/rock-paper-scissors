@@ -15,29 +15,42 @@ const h1 = document.createElement("h1");
 const replay = document.createElement("button");
 
 rock.addEventListener("click", () => {
-    playerChoice = "Rock";
-    computerChoice = getComputerChoice();
-    result = playRound(playerChoice, computerChoice);
-    displayResult();
-    displayTotal();
+    if (pCount === 5 || cCount === 5) {
+        alert("Please Play Again!");
+    } else {
+        playerChoice = "Rock";
+        computerChoice = getComputerChoice();
+        result = playRound(playerChoice, computerChoice);
+        displayResult();
+        displayTotal();
+    }
 });
 
 paper.addEventListener("click", () => {
-    playerChoice = "Paper";
-    computerChoice = getComputerChoice();
-    result = playRound(playerChoice, computerChoice);
-    displayResult();
-    displayTotal();
+    if (pCount === 5 || cCount === 5) {
+        alert("Please Play Again!");
+    } else {
+        playerChoice = "Paper";
+        computerChoice = getComputerChoice();
+        result = playRound(playerChoice, computerChoice);
+        displayResult();
+        displayTotal();
+    }
 });
 
 scissors.addEventListener("click", () => {
-    playerChoice = "Scissors";
-    computerChoice = getComputerChoice();
-    result = playRound(playerChoice, computerChoice);
-    displayResult();
-    displayTotal();
+    if (pCount === 5 || cCount === 5) {
+        alert("Please Play Again!");
+    } else {
+        playerChoice = "Scissors";
+        computerChoice = getComputerChoice();
+        result = playRound(playerChoice, computerChoice);
+        displayResult();
+        displayTotal();
+    }
 });
 
+// Play again
 replay.addEventListener("click", () => {
     pCount = 0;
     cCount = 0;
